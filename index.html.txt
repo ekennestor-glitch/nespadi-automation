@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nespadi Automation — Assistant WhatsApp IA</title>
+<meta name="description" content="Automatisez vos ventes WhatsApp 24h/24. Commandes et paiements Orange Money & MTN MoMo — même pendant que vous dormez."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Space Grotesk',sans-serif;background:#020c1b;color:#f0f4ff;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;z-index:0;
+  background:radial-gradient(ellipse 65% 45% at 20% 5%,rgba(37,99,235,.16) 0%,transparent 55%),
+             radial-gradient(ellipse 45% 35% at 85% 90%,rgba(6,182,212,.1) 0%,transparent 50%);
+  pointer-events:none;}
+nav{position:sticky;top:0;z-index:200;background:rgba(2,12,27,.92);backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,.06);padding:13px 20px;
+  display:flex;align-items:center;justify-content:space-between;}
+/* LOGO — plus de lien, juste un div */
+.logo{display:flex;align-items:center;gap:10px;}
+.logo-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#2563eb,#06b6d4);
+  display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;color:#fff;
+  box-shadow:0 3px 12px rgba(37,99,235,.4);}
+.logo-name{font-size:15px;font-weight:700;color:#f0f4ff;}
+.logo-name span{color:#06b6d4;}
+.live-pill{display:flex;align-items:center;gap:6px;background:rgba(16,185,129,.1);
+  border:1px solid rgba(16,185,129,.2);padding:5px 12px;border-radius:100px;
+  font-size:11px;color:rgba(255,255,255,.55);}
+.ldot{width:6px;height:6px;background:#10b981;border-radius:50%;animation:bl 2s infinite;}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:.15}}
+.hero{position:relative;z-index:1;text-align:center;padding:52px 20px 40px;}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(37,99,235,.1);
+  border:1px solid rgba(37,99,235,.22);color:#93c5fd;font-size:11px;letter-spacing:1.5px;
+  text-transform:uppercase;padding:6px 14px;border-radius:100px;margin-bottom:20px;}
+.hero h1{font-size:clamp(26px,6vw,48px);font-weight:800;line-height:1.1;letter-spacing:-.5px;margin-bottom:14px;}
+.hero h1 .acc{background:linear-gradient(90deg,#2563eb,#06b6d4);-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;background-clip:text;}
+.hero p{font-size:15px;color:rgba(255,255,255,.42);line-height:1.75;max-width:420px;margin:0 auto 32px;}
+.hero p strong{color:#f0f4ff;font-weight:600;}
+.hero-btns{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:40px;}
+.btn-chat{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  background:linear-gradient(135deg,#2563eb,#06b6d4);color:#fff;padding:14px 28px;
+  border-radius:100px;font-size:14px;font-weight:700;border:none;cursor:pointer;
+  font-family:'Space Grotesk',sans-serif;transition:all .2s;
+  box-shadow:0 6px 22px rgba(37,99,235,.35);width:100%;max-width:320px;
+  text-decoration:none;}
+.btn-chat:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(37,99,235,.45);}
+.btn-demo{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  background:transparent;border:1px solid rgba(255,255,255,.12);
+  color:rgba(255,255,255,.7);padding:13px 28px;border-radius:100px;
+  font-size:14px;font-weight:500;text-decoration:none;
+  transition:all .2s;width:100%;max-width:320px;}
+.btn-demo:hover{border-color:rgba(37,99,235,.5);color:#93c5fd;}
+.stats{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
+  padding:0 20px 48px;max-width:480px;margin:0 auto;}
+.stat{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
+  border-radius:14px;padding:16px 10px;text-align:center;}
+.stat-n{font-size:22px;font-weight:800;background:linear-gradient(135deg,#2563eb,#06b6d4);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.stat-l{font-size:10.5px;color:rgba(255,255,255,.3);margin-top:3px;}
+.section{position:relative;z-index:1;padding:40px 20px;max-width:480px;margin:0 auto;}
+.section-label{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#06b6d4;
+  font-weight:600;margin-bottom:12px;display:block;text-align:center;}
+.section-title{font-size:clamp(22px,4vw,30px);font-weight:800;letter-spacing:-.3px;
+  line-height:1.15;margin-bottom:28px;text-align:center;}
+.steps{display:flex;flex-direction:column;gap:0;}
+.step{display:flex;gap:16px;padding-bottom:28px;position:relative;}
+.step:not(:last-child)::after{content:'';position:absolute;left:17px;top:38px;width:2px;bottom:0;
+  background:linear-gradient(180deg,rgba(37,99,235,.35),transparent);}
+.step-n{width:36px;height:36px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,#2563eb,#06b6d4);
+  display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;
+  box-shadow:0 4px 12px rgba(37,99,235,.35);}
+.step-t{font-size:14px;font-weight:700;margin-bottom:3px;}
+.step-d{font-size:12.5px;color:rgba(255,255,255,.38);line-height:1.65;}
+.demo-banner{position:relative;z-index:1;margin:0 auto 40px;
+  background:linear-gradient(135deg,rgba(37,99,235,.1),rgba(6,182,212,.06));
+  border:1px solid rgba(37,99,235,.2);border-radius:18px;padding:20px;max-width:440px;}
+.demo-banner-inner{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
+.demo-ico{width:44px;height:44px;border-radius:12px;flex-shrink:0;
+  background:linear-gradient(135deg,#2563eb,#06b6d4);
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+  box-shadow:0 4px 14px rgba(37,99,235,.35);}
+.demo-t{font-size:14px;font-weight:700;margin-bottom:3px;}
+.demo-d{font-size:12px;color:rgba(255,255,255,.38);line-height:1.5;}
+.demo-link{display:flex;align-items:center;justify-content:center;gap:7px;
+  background:linear-gradient(135deg,#2563eb,#06b6d4);color:#fff;padding:12px;border-radius:12px;
+  font-size:13.5px;font-weight:700;text-decoration:none;
+  transition:all .2s;box-shadow:0 4px 16px rgba(37,99,235,.3);}
+.demo-link:hover{transform:translateY(-2px);}
+.wa-section{position:relative;z-index:1;padding:0 20px 110px;max-width:480px;margin:0 auto;text-align:center;}
+.wa-title{font-size:18px;font-weight:700;margin-bottom:6px;}
+.wa-sub{font-size:13px;color:rgba(255,255,255,.38);margin-bottom:18px;line-height:1.6;}
+.wa-btn-big{display:flex;align-items:center;justify-content:center;gap:10px;
+  background:linear-gradient(135deg,#25d366,#1aab53);color:#000;padding:15px 24px;
+  border-radius:16px;font-size:15px;font-weight:800;text-decoration:none;
+  transition:all .2s;box-shadow:0 6px 24px rgba(37,211,102,.3);}
+.wa-btn-big:hover{transform:translateY(-3px);}
+.wa-note{font-size:11px;color:rgba(255,255,255,.2);margin-top:10px;}
+footer{position:relative;z-index:1;text-align:center;padding:20px;
+  border-top:1px solid rgba(255,255,255,.05);font-size:11.5px;color:rgba(255,255,255,.18);}
+footer a{color:#06b6d4;text-decoration:none;}
+
+/* FAB */
+.bot-fab{
+  position:fixed;bottom:81px;right:20px;z-index:1000;
+  width:62px;height:62px;border-radius:50%;
+  background:linear-gradient(135deg,#2563eb,#06b6d4);
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;color:#fff;text-decoration:none;
+  box-shadow:0 6px 28px rgba(37,99,235,.5),0 0 0 0 rgba(37,99,235,.4);
+  animation:fabPulse 3s infinite;
+  -webkit-tap-highlight-color:transparent;
+}
+.fab-badge{position:absolute;top:-2px;right:-2px;width:19px;height:19px;
+  background:#ef4444;border-radius:50%;font-size:10px;font-weight:700;color:#fff;
+  display:flex;align-items:center;justify-content:center;border:2px solid #020c1b;}
+@keyframes fabPulse{
+  0%  {box-shadow:0 6px 28px rgba(37,99,235,.5),0 0 0 0   rgba(37,99,235,.4);}
+  60% {box-shadow:0 6px 28px rgba(37,99,235,.5),0 0 0 16px rgba(37,99,235,0);}
+  100%{box-shadow:0 6px 28px rgba(37,99,235,.5),0 0 0 0   rgba(37,99,235,0);}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <div class="logo-mark">N</div>
+    <div class="logo-name">Nespadi <span>Automation</span></div>
+  </div>
+  <div class="live-pill"><span class="ldot"></span>IA Active</div>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">🤖 Assistant WhatsApp Intelligent</div>
+  <h1>Votre business vend<br><span class="acc">même pendant que vous dormez.</span></h1>
+  <p>Commandes, paiements <strong>Orange Money & MTN MoMo</strong>, confirmations automatiques — <strong>24h/24, 7j/7,</strong> sans aucune intervention.</p>
+  <div class="hero-btns">
+    <a href="https://peoplebots.in/iframe/3cf166c6b73f030b4f67eeaeba301103" target="_blank" rel="noopener" class="btn-chat">💬 Discuter avec l'assistant</a>
+    <a href="https://fascinating-cajeta-637e09.netlify.app/" target="_blank" rel="noopener" class="btn-demo">▶️ Voir la démo complète</a>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="stat-n">24/7</div><div class="stat-l">Disponible</div></div>
+  <div class="stat"><div class="stat-n">48h</div><div class="stat-l">Installation</div></div>
+  <div class="stat"><div class="stat-n">+30%</div><div class="stat-l">Ventes</div></div>
+</div>
+
+<div class="section">
+  <span class="section-label">Comment ça marche</span>
+  <h2 class="section-title">Le tunnel de vente complet,<br>sans vous déranger.</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">1</div>
+      <div><div class="step-t">Le client écrit à n'importe quelle heure</div>
+      <div class="step-d">Minuit, weekend, jour férié — l'assistant répond en moins de 3 secondes.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-n">2</div>
+      <div><div class="step-t">Il explore votre catalogue</div>
+      <div class="step-d">Photos, prix, descriptions — tout s'affiche automatiquement dans WhatsApp.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-n">3</div>
+      <div><div class="step-t">Il commande directement dans le chat</div>
+      <div class="step-d">Nom, adresse, taille, couleur — le formulaire est intégré dans WhatsApp.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-n">4</div>
+      <div><div class="step-t">Il paie — Orange Money ou MTN MoMo</div>
+      <div class="step-d">Instructions automatiques étape par étape. Le client paie seul. Vous ne faites rien.</div></div>
+    </div>
+    <div class="step">
+      <div class="step-n">5</div>
+      <div><div class="step-t">Confirmation automatique ✅</div>
+      <div class="step-d">Reçu + numéro de commande envoyés au client. Vous recevez juste une notification.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="demo-banner">
+  <div class="demo-banner-inner">
+    <div class="demo-ico">▶️</div>
+    <div>
+      <div class="demo-t">Voir la démo complète en direct</div>
+      <div class="demo-d">Tunnel de vente entier — commande + paiement Orange Money — sans intervention humaine</div>
+    </div>
+  </div>
+  <a href="https://fascinating-cajeta-637e09.netlify.app/" target="_blank" rel="noopener" class="demo-link">🚀 Lancer la démo interactive gratuite</a>
+</div>
+
+<div class="wa-section">
+  <div class="wa-title">Prêt à automatiser votre business ?</div>
+  <div class="wa-sub">Contactez-nous sur WhatsApp.<br>Devis gratuit · Réponse en moins de 2h · Sans engagement.</div>
+  <a href="https://wa.me/237675270808?text=Bonjour%20Nespadi%20!%20Je%20veux%20automatiser%20mon%20business%20WhatsApp." target="_blank" rel="noopener" class="wa-btn-big">📲 Obtenir mon devis gratuit sur WhatsApp</a>
+  <div class="wa-note">Sans engagement · Installation en 48h · Support 7j/7</div>
+</div>
+
+<footer>
+  Nespadi Automation ·
+  <a href="mailto:contact@nespadi.com">contact@nespadi.com</a> ·
+  <a href="https://wa.me/237675270808" target="_blank" rel="noopener">WhatsApp</a>
+</footer>
+
+<!-- FAB — lien direct vers le chat, garanti sur Android -->
+<a href="https://peoplebots.in/iframe/3cf166c6b73f030b4f67eeaeba301103"
+   target="_blank" rel="noopener"
+   class="bot-fab" aria-label="Ouvrir l'assistant">
+  <span class="fab-badge">1</span>
+  💬
+</a>
+
+<!-- Script PeopleBots natif -->
+<script src="https://peoplebots.in/pixel/3cf166c6b73f030b4f67eeaeba301103"></script>
+
+</body>
+</html>
