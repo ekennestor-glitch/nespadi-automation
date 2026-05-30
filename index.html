@@ -18,7 +18,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
 nav{position:sticky;top:0;z-index:200;background:rgba(2,12,27,.92);backdrop-filter:blur(16px);
   border-bottom:1px solid rgba(255,255,255,.06);padding:13px 20px;
   display:flex;align-items:center;justify-content:space-between;}
-/* LOGO — plus de lien, juste un div */
 .logo{display:flex;align-items:center;gap:10px;}
 .logo-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#2563eb,#06b6d4);
   display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;color:#fff;
@@ -46,7 +45,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(2,12,27,.92);backdrop-filt
   font-family:'Space Grotesk',sans-serif;transition:all .2s;
   box-shadow:0 6px 22px rgba(37,99,235,.35);width:100%;max-width:320px;
   text-decoration:none;}
-.btn-chat:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(37,99,235,.45);}
+.btn-chat:hover{transform:translateY(-2px);}
 .btn-demo{display:inline-flex;align-items:center;justify-content:center;gap:8px;
   background:transparent;border:1px solid rgba(255,255,255,.12);
   color:rgba(255,255,255,.7);padding:13px 28px;border-radius:100px;
@@ -90,7 +89,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(2,12,27,.92);backdrop-filt
   font-size:13.5px;font-weight:700;text-decoration:none;
   transition:all .2s;box-shadow:0 4px 16px rgba(37,99,235,.3);}
 .demo-link:hover{transform:translateY(-2px);}
-.wa-section{position:relative;z-index:1;padding:0 20px 110px;max-width:480px;margin:0 auto;text-align:center;}
+.wa-section{position:relative;z-index:1;padding:0 20px 160px;max-width:480px;margin:0 auto;text-align:center;}
 .wa-title{font-size:18px;font-weight:700;margin-bottom:6px;}
 .wa-sub{font-size:13px;color:rgba(255,255,255,.38);margin-bottom:18px;line-height:1.6;}
 .wa-btn-big{display:flex;align-items:center;justify-content:center;gap:10px;
@@ -110,6 +109,8 @@ footer a{color:#06b6d4;text-decoration:none;}
   background:linear-gradient(135deg,#2563eb,#06b6d4);
   display:flex;align-items:center;justify-content:center;
   font-size:26px;color:#fff;text-decoration:none;
+  cursor:pointer;
+  border:none;
   box-shadow:0 6px 28px rgba(37,99,235,.5),0 0 0 0 rgba(37,99,235,.4);
   animation:fabPulse 3s infinite;
   -webkit-tap-highlight-color:transparent;
@@ -122,6 +123,87 @@ footer a{color:#06b6d4;text-decoration:none;}
   60% {box-shadow:0 6px 28px rgba(37,99,235,.5),0 0 0 16px rgba(37,99,235,0);}
   100%{box-shadow:0 6px 28px rgba(37,99,235,.5),0 0 0 0   rgba(37,99,235,0);}
 }
+
+/* PANEL CHAT — s'ouvre dans la même page */
+.chat-overlay{
+  display:none;
+  position:fixed;inset:0;z-index:1001;
+  background:rgba(0,0,0,.6);
+  backdrop-filter:blur(3px);
+  opacity:0;transition:opacity .3s;
+  pointer-events:none;
+}
+.chat-overlay.on{opacity:1;pointer-events:auto;}
+@media(max-width:639px){.chat-overlay{display:block;}}
+
+.chat-panel{
+  position:fixed;z-index:1002;
+  background:#07182e;
+  display:flex;flex-direction:column;
+  transition:transform .35s cubic-bezier(.32,.72,0,1),opacity .25s;
+  pointer-events:none;
+}
+.chat-panel.on{pointer-events:auto;}
+
+/* Mobile : tiroir depuis le bas */
+@media(max-width:639px){
+  .chat-panel{
+    bottom:0;left:0;right:0;
+    height:90dvh;
+    border-radius:18px 18px 0 0;
+    border-top:1px solid rgba(255,255,255,.07);
+    transform:translateY(100%);
+    opacity:0;
+  }
+  .chat-panel.on{transform:translateY(0);opacity:1;}
+}
+/* Desktop : panneau latéral */
+@media(min-width:640px){
+  .chat-panel{
+    bottom:20px;right:20px;
+    width:400px;
+    height:min(680px,calc(100vh - 100px));
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,.07);
+    box-shadow:0 24px 80px rgba(0,0,0,.7);
+    transform:translateX(calc(100% + 28px));
+    opacity:0;
+  }
+  .chat-panel.on{transform:translateX(0);opacity:1;}
+}
+
+.chat-handle{display:none;width:36px;height:4px;background:rgba(255,255,255,.14);
+  border-radius:2px;margin:10px auto 0;flex-shrink:0;}
+@media(max-width:639px){.chat-handle{display:block;}}
+
+.chat-head{display:flex;align-items:center;gap:12px;padding:13px 16px 12px;
+  border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;
+  background:rgba(2,12,27,.8);backdrop-filter:blur(12px);}
+.chat-avatar{width:36px;height:36px;border-radius:10px;flex-shrink:0;
+  background:linear-gradient(135deg,#2563eb,#06b6d4);
+  display:flex;align-items:center;justify-content:center;font-size:16px;}
+.chat-name{font-size:13px;font-weight:700;color:#f0f4ff;}
+.chat-status{display:flex;align-items:center;gap:5px;font-size:10px;
+  color:rgba(255,255,255,.35);margin-top:2px;}
+.chat-dot{width:5px;height:5px;background:#10b981;border-radius:50%;
+  animation:bl 2s infinite;flex-shrink:0;}
+.chat-close{margin-left:auto;width:30px;height:30px;border-radius:8px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+  color:rgba(255,255,255,.5);font-size:14px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  -webkit-tap-highlight-color:transparent;}
+
+.chat-body{flex:1;position:relative;overflow:hidden;}
+.chat-body iframe{width:100%;height:100%;border:none;display:block;}
+
+.chat-loader{position:absolute;inset:0;z-index:3;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  background:#07182e;transition:opacity .4s,visibility .4s;}
+.chat-loader.done{opacity:0;visibility:hidden;}
+.spin{width:34px;height:34px;border:3px solid rgba(37,99,235,.15);
+  border-top-color:#2563eb;border-radius:50%;animation:spin .75s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin-lbl{font-size:11px;color:rgba(255,255,255,.28);}
 </style>
 </head>
 <body>
@@ -139,7 +221,7 @@ footer a{color:#06b6d4;text-decoration:none;}
   <h1>Votre business vend<br><span class="acc">même pendant que vous dormez.</span></h1>
   <p>Commandes, paiements <strong>Orange Money & MTN MoMo</strong>, confirmations automatiques — <strong>24h/24, 7j/7,</strong> sans aucune intervention.</p>
   <div class="hero-btns">
-    <a href="https://peoplebots.in/iframe/3cf166c6b73f030b4f67eeaeba301103" target="_blank" rel="noopener" class="btn-chat">💬 Discuter avec l'assistant</a>
+    <button class="btn-chat" id="btnChat">💬 Discuter avec l'assistant</button>
     <a href="https://fascinating-cajeta-637e09.netlify.app/" target="_blank" rel="noopener" class="btn-demo">▶ Voir la démo complète</a>
   </div>
 </div>
@@ -154,28 +236,23 @@ footer a{color:#06b6d4;text-decoration:none;}
   <span class="section-label">Comment ça marche</span>
   <h2 class="section-title">Le tunnel de vente complet,<br>sans vous déranger.</h2>
   <div class="steps">
-    <div class="step">
-      <div class="step-n">1</div>
+    <div class="step"><div class="step-n">1</div>
       <div><div class="step-t">Le client écrit à n'importe quelle heure</div>
       <div class="step-d">Minuit, weekend, jour férié — l'assistant répond en moins de 3 secondes.</div></div>
     </div>
-    <div class="step">
-      <div class="step-n">2</div>
+    <div class="step"><div class="step-n">2</div>
       <div><div class="step-t">Il explore votre catalogue</div>
       <div class="step-d">Photos, prix, descriptions — tout s'affiche automatiquement dans WhatsApp.</div></div>
     </div>
-    <div class="step">
-      <div class="step-n">3</div>
+    <div class="step"><div class="step-n">3</div>
       <div><div class="step-t">Il commande directement dans le chat</div>
       <div class="step-d">Nom, adresse, taille, couleur — le formulaire est intégré dans WhatsApp.</div></div>
     </div>
-    <div class="step">
-      <div class="step-n">4</div>
+    <div class="step"><div class="step-n">4</div>
       <div><div class="step-t">Il paie — Orange Money ou MTN MoMo</div>
       <div class="step-d">Instructions automatiques étape par étape. Le client paie seul. Vous ne faites rien.</div></div>
     </div>
-    <div class="step">
-      <div class="step-n">5</div>
+    <div class="step"><div class="step-n">5</div>
       <div><div class="step-t">Confirmation automatique ✅</div>
       <div class="step-d">Reçu + numéro de commande envoyés au client. Vous recevez juste une notification.</div></div>
     </div>
@@ -206,16 +283,138 @@ footer a{color:#06b6d4;text-decoration:none;}
   <a href="https://wa.me/237675270808" target="_blank" rel="noopener">WhatsApp</a>
 </footer>
 
-<!-- FAB — lien direct vers le chat, garanti sur Android -->
-<a href="https://peoplebots.in/iframe/3cf166c6b73f030b4f67eeaeba301103"
-   target="_blank" rel="noopener"
-   class="bot-fab" aria-label="Ouvrir l'assistant">
+<!-- FAB -->
+<button class="bot-fab" id="botFab" aria-label="Ouvrir l'assistant" type="button">
   <span class="fab-badge">1</span>
   💬
-</a>
+</button>
 
-<!-- Script PeopleBots natif -->
-<script src="https://peoplebots.in/pixel/3cf166c6b73f030b4f67eeaeba301103"></script>
+<!-- Overlay -->
+<div class="chat-overlay" id="chatOverlay"></div>
+
+<!-- Panel chat avec iframe PeopleBots -->
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-handle" id="chatHandle"></div>
+  <div class="chat-head">
+    <div class="chat-avatar">🤖</div>
+    <div>
+      <div class="chat-name">Assistant Nespadi</div>
+      <div class="chat-status"><span class="chat-dot"></span>En ligne · répond en quelques secondes</div>
+    </div>
+    <button class="chat-close" id="chatClose" aria-label="Fermer" type="button">✕</button>
+  </div>
+  <div class="chat-body">
+    <div class="chat-loader" id="chatLoader">
+      <div class="spin"></div>
+      <div class="spin-lbl">Chargement de l'assistant…</div>
+    </div>
+    <iframe
+      id="chatFrame"
+      title="Assistant Nespadi"
+      allow="microphone *; autoplay *; encrypted-media *"
+      allowfullscreen
+      sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox"
+    ></iframe>
+  </div>
+</div>
+
+<script>
+(function(){
+  var fab     = document.getElementById('botFab');
+  var overlay = document.getElementById('chatOverlay');
+  var panel   = document.getElementById('chatPanel');
+  var closeBtn= document.getElementById('chatClose');
+  var handle  = document.getElementById('chatHandle');
+  var loader  = document.getElementById('chatLoader');
+  var frame   = document.getElementById('chatFrame');
+  var btnChat = document.getElementById('btnChat');
+  var isOpen  = false;
+  var loaded  = false;
+  var originalViewportHeight = 0;
+
+  var BOT_URL = 'https://peoplebots.in/iframe/3cf166c6b73f030b4f67eeaeba301103';
+
+  function loadFrame(){
+    if(loaded) return;
+    loaded = true;
+    frame.src = BOT_URL;
+    frame.onload = function(){
+      loader.classList.add('done');
+      setTimeout(fixKeyboard, 100);
+    };
+    frame.onerror = function(){
+      loader.innerHTML = '<div style="color:#ef4444;font-size:12px;text-align:center;">Erreur lors du chargement</div>';
+    };
+  }
+
+  function fixKeyboard(){
+    if(window.innerWidth >= 768) return;
+    
+    var currentHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    
+    // La hauteur a diminué = le clavier s'est ouvert
+    if(currentHeight < originalViewportHeight * 0.8){
+      // Réduire la hauteur du panel pour que l'input reste visible
+      panel.style.height = currentHeight + 'px';
+      // Scroller vers le bas du chat pour voir le dernier message
+      setTimeout(function(){
+        if(frame && frame.contentWindow){
+          try {
+            frame.contentWindow.scrollTo(0, frame.contentWindow.document.body.scrollHeight);
+          } catch(e) {}
+        }
+      }, 100);
+    } else {
+      // Le clavier s'est fermé, revenir à la hauteur normale
+      panel.style.height = 'min(680px,calc(100vh - 100px))';
+    }
+  }
+
+  if(window.visualViewport){
+    originalViewportHeight = window.visualViewport.height;
+    window.visualViewport.addEventListener('resize', fixKeyboard);
+  }
+  window.addEventListener('resize', fixKeyboard);
+
+  function open(){
+    if(isOpen) return;
+    isOpen = true;
+    originalViewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    loadFrame();
+    panel.classList.add('on');
+    overlay.classList.add('on');
+    if(window.innerWidth < 640) document.body.style.overflow = 'hidden';
+    setTimeout(fixKeyboard, 50);
+  }
+
+  function close(){
+    if(!isOpen) return;
+    isOpen = false;
+    panel.classList.remove('on');
+    overlay.classList.remove('on');
+    panel.style.height = '';
+    document.body.style.overflow = '';
+  }
+
+  /* Événements */
+  fab.addEventListener('click', open);
+  fab.addEventListener('touchend', function(e){ e.preventDefault(); open(); });
+  btnChat.addEventListener('click', open);
+  btnChat.addEventListener('touchend', function(e){ e.preventDefault(); open(); });
+  closeBtn.addEventListener('click', close);
+  closeBtn.addEventListener('touchend', function(e){ e.preventDefault(); close(); });
+  overlay.addEventListener('click', close);
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
+
+  /* Swipe bas pour fermer */
+  var y0 = 0;
+  handle.addEventListener('touchstart', function(e){ y0 = e.touches[0].clientY; },{passive:true});
+  handle.addEventListener('touchend', function(e){
+    if(e.changedTouches[0].clientY - y0 > 60) close();
+  },{passive:true});
+
+})();
+</script>
 
 </body>
 </html>
